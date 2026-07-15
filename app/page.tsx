@@ -1,7 +1,9 @@
 import { HeroSection } from '@/components/hero-section'
 import { CountdownTimer } from '@/components/countdown-timer'
+import { InviteImageSection } from '@/components/invite-image-section'
 import { EventDetails } from '@/components/event-details'
 import { GallerySection } from '@/components/gallery-section'
+import { VideoSection } from '@/components/video-section'
 import { RsvpSection } from '@/components/rsvp-section'
 import { FooterSection } from '@/components/footer-section'
 import { MusicToggle } from '@/components/music-toggle'
@@ -11,8 +13,10 @@ export default function Page() {
     <main className="relative overflow-hidden">
       <HeroSection />
       <CountdownTimer />
+      <InviteImageSection />
       <EventDetails />
       <GallerySection />
+      <VideoSection />
       <RsvpSection />
       <FooterSection />
       <MusicToggle />

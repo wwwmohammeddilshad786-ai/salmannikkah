@@ -17,7 +17,7 @@ export function GallerySection() {
   const ref = useReveal<HTMLDivElement>()
 
   return (
-    <section id="gallery" className="px-6 py-20 sm:py-28">
+    <section id="gallery" className="px-6 py-10 sm:py-14">
       <div ref={ref} className="reveal mx-auto max-w-5xl">
         <div className="text-center">
           <p className="font-sans text-xs uppercase tracking-[0.35em] text-gold">

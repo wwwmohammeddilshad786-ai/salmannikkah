@@ -41,7 +41,7 @@ export function HeroSection() {
           Together with their families
         </p>
 
-        <h1 className="mt-6 font-serif leading-none">
+        <h1 className="mt-6 font-niloofar leading-none">
           <span
             className="block animate-fade-up gold-gradient-text text-6xl font-semibold sm:text-7xl md:text-8xl"
             style={{ animationDelay: '0.5s' }}

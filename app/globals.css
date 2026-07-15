@@ -2,6 +2,17 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+/* XB Niloofar — self-hosted Persian font */
+@font-face {
+  font-family: 'XB Niloofar';
+  src: url('/fonts/XBNiloofar.woff2') format('woff2'),
+       url('/fonts/XBNiloofar.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -28,6 +39,7 @@
 
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-display), ui-serif, Georgia, serif;
+  --font-niloofar: 'XB Niloofar', 'Segoe UI', Georgia, serif;
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -71,6 +83,9 @@
 }
 
 @layer utilities {
+  .font-niloofar {
+    font-family: var(--font-niloofar);
+  }
   .text-gold {
     color: var(--gold);
   }
