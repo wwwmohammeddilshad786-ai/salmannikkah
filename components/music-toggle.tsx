@@ -7,13 +7,15 @@ export function MusicToggle() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [playing, setPlaying] = useState(false)
   const [available, setAvailable] = useState(true)
+  // Track whether music was playing before video unmuted so we can restore it
+  const wasPlayingBeforeVideoRef = useRef(false)
 
   useEffect(() => {
     const songs = [
-  '/audio/wedding-nasheed-lofi.mp3',
-  '/audio/wedding-nasheed.mp3',
-  '/audio/nasheed.mp3',
-]
+      '/audio/wedding-nasheed-lofi.mp3',
+      '/audio/wedding-nasheed.mp3',
+      '/audio/nasheed.mp3',
+    ]
 
     const randomSong = songs[Math.floor(Math.random() * songs.length)]
 
@@ -43,10 +45,35 @@ export function MusicToggle() {
     return () => {
       document.removeEventListener('click', startAudio)
       document.removeEventListener('touchstart', startAudio)
-
       audio.pause()
       audioRef.current = null
     }
+  }, [])
+
+  // Listen for video mute/unmute events from VideoSection
+  useEffect(() => {
+    const handleVideoMuteChange = (e: Event) => {
+      const { muted } = (e as CustomEvent<{ muted: boolean }>).detail
+      const audio = audioRef.current
+      if (!audio) return
+
+      if (!muted) {
+        // Video just unmuted → remember if music was playing and pause it
+        wasPlayingBeforeVideoRef.current = !audio.paused
+        if (!audio.paused) {
+          audio.pause()
+          setPlaying(false)
+        }
+      } else {
+        // Video muted again → restore music if it was playing before
+        if (wasPlayingBeforeVideoRef.current) {
+          audio.play().then(() => setPlaying(true)).catch(() => {})
+        }
+      }
+    }
+
+    window.addEventListener('video-mute-change', handleVideoMuteChange)
+    return () => window.removeEventListener('video-mute-change', handleVideoMuteChange)
   }, [])
 
   const toggle = async () => {

@@ -1,10 +1,27 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { useReveal } from '@/hooks/use-reveal'
 import { OrnamentDivider } from './ornament-divider'
 
 export function VideoSection() {
   const ref = useReveal()
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const handleVolumeChange = () => {
+      // Fire a custom event so MusicToggle can react
+      window.dispatchEvent(
+        new CustomEvent('video-mute-change', { detail: { muted: video.muted } })
+      )
+    }
+
+    video.addEventListener('volumechange', handleVolumeChange)
+    return () => video.removeEventListener('volumechange', handleVolumeChange)
+  }, [])
 
   return (
     <section
@@ -35,6 +52,7 @@ export function VideoSection() {
             }}
           >
             <video
+              ref={videoRef}
               className="absolute inset-0 h-full w-full object-cover"
               autoPlay
               muted
